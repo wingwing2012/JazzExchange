@@ -1,0 +1,172 @@
+<%- include header %>
+<div >
+    <div class="big-splash">
+      <div class="big-splash-bg">
+       		 <div class="jazz-logo-frame">
+             	<img class="jazz-logo" src="/images/jazzlogo.png"/>
+             </div>
+             <!-- ask question -->
+
+          	 <div class="banner-btn">
+          	     <img class="banner-btn-img2" src="/images/badges.png"/>
+          	 	 <div class="banner-btn-text">Badges</div>
+          	 </div>    
+           	 <div class="banner-btn">
+          	     <img class="banner-btn-img" src="/images/experts.png"/>
+          	 	 <div class="banner-btn-text">Experts</div>
+          	 </div>         	 
+          	    
+             <div class="banner-btn">
+          	     <img class="banner-btn-img" src="/images/tag.png"/>
+          	 	 <div class="banner-btn-text">Tags</div>
+          	 </div>          	 
+          	 <div class="banner-btn"><a href="/askQuestion">
+          	     <img class="banner-btn-img" src="/images/question-mark-icon.png"/>
+          	 	 <div class="banner-btn-text">Ask Questions</div></a>
+          	 </div> 
+       </div>
+    </div>
+</div>
+
+
+<!-- Content container -->
+<div float:left>
+
+<!--<div class="container">
+    <div class="row" style="width:120px; float:left;">-->
+        <div style="width:78%; float:left; margin-left:5px">            
+           <% lists.forEach(function(list, index){ %>
+              <div class="panel" id="element">
+              	<div class="container-left">
+              		<div class="indexer-vote-frame">
+              			<div class="indexer-number"><%= list.vote.length %></div>
+              			<div class="indexer-name">votes</div>
+              		</div>
+              		<% if (list.answer.length > 0) { %> 
+              			<div class="indexer-vote-frame" style="background-color: #BCD686;">
+              		<% } else { %>
+              			<div class="indexer-vote-frame">
+              		<% }%>
+              			<div class="indexer-number"><%= list.answer.length %></div>
+              			<div class="indexer-name">answers</div>
+              		</div>
+              		<div class="indexer-vote-frame">
+              			<div class="indexer-number"><%= list.view.length %></div>
+              			<div class="indexer-name">views</div>
+              		</div>
+              	</div>
+              	<div class="container-right">
+              		<div class="container-question-name">
+              			 <a style="margin-right:5px;" href="/question/<%= list._id %>"> <%= list.name %> </a>
+              		</div>
+              		<div class="container-question-others">
+              			<% if (list.tag.length > 0) { %>
+              			 <div class="post-taglist">
+              			    <% list.tag.forEach(function(tempTag, index){ %>
+              				   <a class="post-tag" rel="tag" title="votes '<%= tempTag.score %>'" href="/tag/<%= tempTag.name %>"><%= tempTag.name %></a>
+              				<% }) %>
+              				<div class="container-question-others-right">
+              					<%= list.time.seconds %>
+              				</div>
+              				<div class="container-question-others-right">
+              					<a href='/people/list.user'> <%= list.user %></a>
+              				</div>
+              			</div>
+              		   <% } %>
+              		</div>   
+              	</div>
+  
+              </div>
+           <% }) %>            
+    	</div>
+        
+<!-- Tag Cloud -->        
+		<div id="tags" style="width:20%; float:left; margin-left:10px;">
+			<ul>
+				<li class="tag1">
+					<a href="#">IBM</a>
+				</li>
+				<li class="tag2">
+					<a href="#">Rational</a>
+				</li>
+				<li class="tag3">
+					<a href="#">Gamification</a>
+				</li>
+				<li class="tag2">
+					<a href="#">Proin</a>
+				</li>
+				<li class="tag4">
+					<a href="#">Rational Team Concert</a>
+				</li>
+				<li class="tag1">
+					<a href="#">jQuery</a>
+				</li>
+				<li class="tag1">
+					<a href="#">uDeploy</a>
+				</li>
+				<li class="tag5">
+					<a href="#">DevOps</a>
+				</li>
+				<li class="tag2">
+					<a href="#">Web 2.0</a>
+				</li>
+				<li class="tag1">
+					<a href="#"></a>
+				</li>
+				<li class="tag3">
+					<a href="#">Bluemix</a>
+				</li>
+				<li class="tag4">
+					<a href="#">PAAS</a>
+				</li>
+				<li class="tag1">
+					<a href="#">Green hat</a>
+				</li>
+				<li class="tag5">
+					<a href="#">Cloud</a>
+				</li>
+				<li class="tag1">
+					<a href="#">dojo</a>
+				</li>
+				<li class="tag2">
+					<a href="#">jazz</a>
+				</li>
+			</ul>
+		</div>
+        
+</div>
+<!--    </div>
+</div> -->
+<script>
+    var pageNum = 1;
+    $("#getMore").on("click", function () {
+        $.get("/getQuestion", { page: pageNum }, function (info) {
+            for (var i = 0, l = info.length; i < l; i++) {
+                info[i].url = "/people/" + info[i].name;
+            }
+            pageNum++;
+            var element = $('#element'),
+                    tpl = $('#tpl').html();
+            var render = _.template(tpl);
+            var data = {};
+            data.list = info;
+            var html = render(data);
+            // 将解析后的内容填充到渲染元素
+            element.append(html);
+        });
+    });
+    
+     //Initialize the accordion widget
+    function initAccordion(){
+    $( ".panel" ).accordion({
+        collapsible: true,
+        active:false
+    });
+    }
+    
+    $(document).ready(function() {
+           //手风琴
+       // initAccordion();
+    });
+</script>
+<%- include footer %>

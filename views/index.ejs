@@ -1,0 +1,111 @@
+<%- include header %>
+<main>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2">
+                    <div class="col-md-4">
+                    	<div class="jazz-logo-frame-index">
+             				<img class="jazz-logo" src="/images/jazzlogo.png"/>
+             			</div>
+                        <p>
+                            <button class="btn btn-success btn-lg" id="changeReg">登陆</button>
+                        </p>
+
+                    </div>
+                    <div class="col-md-4 col-md-offset-4">
+                        <form class="form-horizontal" role="form" id="login" action="/login" method="post">
+                            <fieldset>                               
+                                <h2 class="form-signin-heading">请登录：</h2>
+
+                                <p class="input-group">
+                                    <input type="text" class="form-control" placeholder="用户名" name="name"
+                                           minlength="1" required/>
+                                </p>
+
+                                <p class="input-group">
+                                    <input type="password" class="form-control" name="password" placeholder="密码"
+                                           required/>
+                                </p>
+                                <button type="submit" class="btn btn-success btn-lg">登陆</button>
+                            </fieldset>
+                        </form>
+                        <form class="form-horizontal" role="form" id="reg" action="/reg" method="post">
+                            <fieldset>
+                                <h2 class="form-signin-heading">请注册：</h2>
+                                <p class="input-group">
+                                    <input type="text" class="form-control" placeholder="用户名" name="name"
+                                           minlength="1" required/>
+                                </p>
+
+                                <p class="input-group">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                           placeholder="密码"
+                                           required/>
+                                </p>
+
+                                <p class="input-group">
+                                    <input type="password" class="form-control" name="repassword" placeholder="确定密码"
+                                           required/>
+                                </p>                               
+                                <button type="submit" class="btn btn-success btn-lg">注册</button>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+    $(document).ready(function () {
+        $("#login").hide();
+        $("#changeReg").data('isReg', false);
+        $("#changeReg").on("click", function () {
+            if ($("#changeReg").data('isReg') === false) {
+                $("#login").show();
+                $("#changeReg").html('马上注册');
+                $("#changeReg").data('isReg', true);
+                $("#reg").hide();
+            } else if ($("#changeReg").data('isReg') === true) {
+                $("#login").hide();
+                $("#changeReg").html('登录');
+                $("#changeReg").data('isReg', false);
+                $("#reg").show();
+            }
+        });
+        $("#reg").validate({
+            rules: {
+                name: {
+                    required: true,
+                    minlength: 1
+                },
+                password: {
+                    required: true,
+                    minlength: 1
+                },
+                repassword: {
+                    required: true,
+                    minlength: 1,
+                    equalTo: "#password"
+                }
+            },
+            messages: {
+                name: {
+                    required: "请输入用户名",
+                    minlength: "用户名不能为空"
+                },
+                password: {
+                    required: "请输入密码",
+                    minlength: "密码不能为空"
+                },
+                repassword: {
+                    required: "请再输入一遍密码",
+                    minlength: "再次输入密码不能为空",
+                    equalTo: "请输入和上面一样的密码"
+                }
+            }
+        });
+    });
+</script>
+<%- include footer %>

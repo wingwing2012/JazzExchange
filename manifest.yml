@@ -1,0 +1,9 @@
+---
+applications:
+- name: jazzExchange
+  mem: 512M
+  instances: 1
+  host: jazzExchange
+  domain: mybluemix.net
+  path: .
+  command: node app.js

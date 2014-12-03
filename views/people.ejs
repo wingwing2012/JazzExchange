@@ -1,0 +1,107 @@
+<%- include header %>
+<div class="container">
+  <div class="row">
+    <div class="col-md-7">
+      <div class="row">
+        <h1 id="toName"><%= name %></h1>
+        <div class="col-md-3">
+          <img src="<%= imgUrl%>" style="width:127px;height:111px;">
+        </div>
+        <div class="col-md-8" id="info">
+          <p>地址：<%= address%></p>
+          <p>公司：<%= company%></p>
+          <p>学校：<%= school%></p>
+          <p>个人简介：<%= info%></p>
+          <% if (user) { %>
+            <% if (user.name==name) { %>
+            <div id="edit" class="btn btn-primary">编辑</div>
+            <% }%>
+          <% }%>
+        </div>
+        <p class="btn btn-info disabled" id="offline">隐身</p>
+        <a class="btn btn-success" data-toggle="modal" id="talk" href="#talkBox" style="display:none">聊天</a>
+        <% if (user) { %>
+          <% if (user.name==name) { %>
+          <div class="col-md-8" id="infoEdit" style="display:none;">
+            <form class="form-group" action="/people" method="post" enctype="multipart/form-data">
+                <input type="text" class="form-control" placeholder="地址" name="address">
+                <input type="text" class="form-control" placeholder="公司" name="company">
+                <input type="text" class="form-control" placeholder="学校" name="school">
+                <input type="text" class="form-control" placeholder="个人简介" name="info">
+                <div class="input-group">
+                <label  class="">修改头像 : </label> <input type="file" class="form-control" name="thumbnail"/>
+                </div>
+                <button type="submit" class="btn btn-primary">提交</button>
+                <div id="noEdit" class="btn btn-primary">取消</div>
+                
+            </form>
+          </div>
+          <% }%>
+        <% }%>
+      </div>
+      <br/>
+      <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#home">提问</a></li>
+        <li><a href="#profile">回答</a></li>
+        <li><a href="#messages">热门</a></li>
+      </ul>
+       
+      <div class="tab-content">
+        <div class="tab-pane active" id="home">
+          <ul class="thumbnails" id="element">
+            <% question.forEach(function(q, index){ %>
+            <li>
+              <h4><a href="/question/<%= q._id %>"><%= q.name %></a></h4>
+              <p><%= q.content %></p>
+            </li>
+            <% })%>
+          </ul>
+        </div>
+        <div class="tab-pane" id="profile">回答</div>
+        <div class="tab-pane" id="messages">热门</div>
+      </div>
+    </div>    
+  </div>
+</div>
+
+<script>
+//这个是导航切换
+$('#myTab a:first').tab('show');
+$("#myTab").on("click",function(e){
+  if($(e.target).attr("href")==="#home"){
+    $("#myTab a:eq(0)").tab('show');
+  }else if($(e.target).attr("href")==="#profile"){
+    $("#myTab a:eq(1)").tab('show');
+  }else if($(e.target).attr("href")==="#messages"){
+    $("#myTab a:eq(2)").tab('show');
+  } 
+})
+//编辑效果
+$("#edit").on("click",function(){
+  $("#info").hide();
+  $("#infoEdit").show();
+});
+$("#noEdit").on("click",function(){
+  $("#info").show();
+  $("#infoEdit").hide();
+});
+//接受上线消息
+socket.on('online',function(data){
+  if(data.user=="<%= name%>"){
+    $("#talk").show();
+    $("#offline").hide();
+  }
+  if(data.users.indexOf("<%= name%>") != -1){
+    $("#talk").show();
+    $("#offline").hide();
+  }
+});
+//接受下线消息
+socket.on('offline',function(data){
+  if(data.user=="<%= name%>"){
+    $("#talk").hide();
+    $("#offline").show();
+  }
+});
+</script>
+<%- include footer %>

@@ -1,0 +1,45 @@
+.post-tag, .post-text .post-tag, .wmd-preview a.post-tag {
+    background-color: #E0EAF1;
+    border-bottom: 1px solid #B3CEE1;
+    border-right: 1px solid #B3CEE1;
+    color: #3E6D8E;
+    display: inline-block;
+    font-size: 90%;
+    line-height: 1.4;
+    margin: 2px 2px 2px 0;
+    padding: 3px 4px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+a.post-tag:hover, .post-text a.post-tag:hover, .wmd-preview a.post-tag:hover {
+    background-color: #C4DAE9;
+    border-bottom: 1px solid #C4DAE9;
+    border-right: 1px solid #C4DAE9;
+    text-decoration: none;
+}
+
+.post-taglist {
+	margin-bottom: 10px;
+	clear: both
+}
+
+.vote-up, .vote-down {
+	display: block;
+	margin: 0 auto
+}
+
+.vote-count-post {
+	display: block;
+	font-size: 24px
+}
+.vote {
+	float: left;
+	margin:10px;
+	width: 50px;
+	height: 80px;
+}
+.question-content {
+	margin:10px;	
+	height: 100px;
+}

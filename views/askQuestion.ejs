@@ -1,0 +1,79 @@
+<%- include header %>
+<!-- 提问 -->
+<div class="big-splash">
+   <div class="big-splash-bg">
+      <span class="splash-inner">
+          <h1>提问</h1>
+      </span>
+   </div>
+</div>
+
+<div float:left="">
+	<div style="width:78%; float:left; margin-left:5px">
+		<div id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+		    <div class="big-splash">
+		      <div>
+		            <div class="modal-body">
+		                <p><input type="text" placeholder="标题" name="title" id="askTitle" style="width:800px" required/></p>
+		                <div class="control-group">
+		                    <label class="control-label">关键字:  </label><br/>
+		                    <div id="checkedTags" class="askquestion-size">
+		                    	<% tags.forEach(function(tag, index){ %>
+		                    		<div class="posttag"><input id="" type="checkbox" value="<%= tag.name %>"><%= tag.name %></input></div>                    		
+		                    	<% }) %>
+		                    </div>
+		                    <p/>
+		                </div>
+		                <textarea name="askText" rows="13" placeholder="正文" style="width:800px" id="askText" required></textarea>
+		            </div>
+		            <div class="askquestion-footer">
+		                <button class="btn btn-primary btn-lg" id="askPost">提问</button>              
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div id="refExperts" class="askquestion-rightbar">
+		<div>
+			<input type="checkbox" value="David"/> David<br/>
+			<input type="checkbox" value="Kevin"/> Kevin Z.<br/> 
+			<input type="checkbox" value="Kevin"/> Joseph <br/> 
+			<input type="checkbox" value="Kevin"/> Wing Wing<br/> 
+			<input type="checkbox" value="Kevin"/> Nick Hu <br/> 
+			<input type="checkbox" value="Kevin"/> Rob W <br/> 
+			<input type="checkbox" value="Kevin"/> Jorge K <br/> 
+			<input type="checkbox" value="Kevin"/> Iron Man <br/> 
+		</div>
+	</div>
+</div>
+
+<script>
+    $("#askPost").on("click", function () {
+    	var tags = [];
+    	$("#checkedTags").find(":checked").map(function(){
+	    	var checked = $("input[type=checkbox]:checked");
+	    	if($(this).is(':checked')){
+			    	tags.push($(this).val());
+			    }
+		});
+		$.post("askQuestion", { title: $("#askTitle").val(), project: "Rational Team Concert", askText: $("#askText").val(), tag : tags}, function (data) {
+            	if (data) {
+                	console.log("post question successfully");
+            		location = "/show";
+            	}
+        	});
+	    });
+    
+    $("#checkedTags").on('click', function(){
+    	$("#checkedTags").find("input[type=checkbox]").map(function(){
+	    	var checked = $("input[type=checkbox]");
+	    		if($(this).is(':checked')){
+			    	$(this).parent('div').css('background-color', '#f90');
+			    }else{
+			    	$(this).parent('div').css('background-color', '#51F13C');
+			    }
+	    });
+    });
+    
+</script>
+<%- include footer %>

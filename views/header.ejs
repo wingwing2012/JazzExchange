@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <title>JazzExchange Platform</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/redmond/jquery-ui-1.10.4.custom.css">
+    <link rel="stylesheet" href="/stylesheets/jazz.css">
+    <script type="text/javascript" src="/javascripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui-1.10.4.custom.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="/javascripts/bootstrap.js"></script>
+    <script type="text/javascript" src="/javascripts/underscore.js"></script>
+    <script type="text/javascript" src="/javascripts/socket.io.js"></script>    
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse"
+                            data-target="#jazzq-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/">JazzExchange</a>
+                </div>
+                <div class="collapse navbar-collapse" id="jazzq-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">首页</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="dropdown">
+                            <% if(user){ %>
+                        <li><a href="/loginout">退出</a></li>
+                        <li><a href="/people/<%= user.name %>" id="myName"><%= user.name %></a></li>
+                        <li id="news" style="display:none;"><a href="#talkBox" data-toggle="modal"><i
+                                        class="icon-envelope icon-white"></i></a>
+                        </li>
+                    </ul>
+                    <% } %>
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- 聊天 -->
+<div id="talkBox" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalTalk" aria-hidden="true">
+     <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalTalk">聊天窗口</h3>
+            </div>
+            <div class="modal-body">
+                <div class="modal-body" id="talkCom">
+                </div>
+                <textarea name="askText" rows="5" placeholder="正文" style="width:400px" id="selfTalk"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true" id="closeAsk">关闭</button>
+                <button class="btn" id="talkPost">提问</button>
+            </div>
+        </div>
+     </div>
+</div>
+<script type="text/javascript" src="/javascripts/header.js"></script>

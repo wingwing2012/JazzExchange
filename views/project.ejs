@@ -1,0 +1,26 @@
+<%- include header %>
+<div > </div>
+    <div class="big-splash">
+      <div class="big-splash-bg">
+        <span class="splash-inner">
+            <h1>项目列表</h1>
+        </span>
+       </div>
+    </div>
+<div > </div>
+<div class="container">
+    <div class="list-group">
+        <% lists.forEach(function(list, index){ %>
+          <% if (index === 0) { %>
+            <a href="<%= list.url %>" class="list-group-item  active">
+                <%= list.name %>
+            </a>
+            <% } else {%>
+            <a href="<%= list.url %>" class="list-group-item">
+                <%= list.name %>
+            </a>
+            <% }%>
+        <% }) %>
+    </div>
+</div>
+<%- include footer %>
