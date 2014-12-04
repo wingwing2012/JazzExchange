@@ -1,0 +1,104 @@
+<%- include header %>
+
+<div > </div>
+    <div class="big-splash">
+      <div class="big-splash-bg">
+        <span class="splash-inner">
+            <h1><%= items.name %></h1>
+            <h3 style="float:right">作者:<a href='/people/<%= items.user %>'> <%= items.user %></a></h3>
+        </span>
+       </div>
+    </div>
+<div > </div>
+<div itemscope="" itemtype="http://schema.org/WebApplication">
+  <link itemprop="SoftwareApplicationCategory" href="http://schema.org/OtherApplication">
+  <section class="primary">
+      <div id="addon" class="island c question-content">
+      	<div class="vote">
+  			<input type="hidden" value="<%= items._id %>" id="questionId">
+  			<a class="vote-up-off" title="赞" style="cursor:pointer;" id="addVote"><span class="glyphicon glyphicon-hand-up"></span></a>
+  			<span class="vote-count-post " itemprop="upvoteCount"><%= items.vote.length %></span>
+  			<a class="vote-down-off" title="踩" style="cursor:pointer;" id="removeVote"><span class="glyphicon glyphicon-hand-down"></span></a>
+		</div>
+        <div class="text"><p><%= items.content %></p></div>
+      </div>
+      <div class="notice c author">
+      <ul>
+        <% items.answer.forEach(function(ans, index){ %>
+        <li class="island c question-content">
+        	<div class="vote">        	    
+  				<input type="hidden" value="<%= ans.id %>">
+  				<a class="vote-up-off" title="赞" style="cursor:pointer;"><span class="glyphicon glyphicon-hand-up"></span></a>
+  				<span class="vote-count-post " itemprop="upvoteCount"><%= ans.vote.length %></span>
+  				<a class="vote-down-off" title="踩" style="cursor:pointer;" id="answerRemoveVote"><span class="glyphicon glyphicon-hand-down"></span></a>
+			</div>
+			<div class="text"><p><%= ans.answer %></p></div>          	
+            <h6><i>by <a href='/people/<%= ans.user.name %>'><%= ans.user.name %></a></i></h6>
+        </li>
+        <% })%>
+      </ul>
+      </div>
+      <div align="right">
+        <form action="/answer" method="post">
+        	<input name="questionId" value="<%= id %>" style="display:none"/>
+       	 	<input name="answerNum" value="<%= items.answer.length %>" style="display:none"/>
+        	<div class="control-group">
+        		<textarea name="answer" class="island c" style="width:400px"></textarea>
+        	</div>
+        	<input class="btn btn-primary" type="submit" value="Submit"/>      
+      	</form>
+      </div>
+  </section>
+</div>
+<script>
+    $("#addVote").on("click", function () {    	
+		$.post("/question/addVote", { questionId: $("#questionId").val() }, function (data) {
+            	if (data) {
+                	console.log("post question successfully");
+                	window.location.reload();   	
+            	}
+        	});
+	}); 
+   
+    $("#removeVote").on("click", function () {    	
+		$.post("/question/removeVote", { questionId: $("#questionId").val() }, function (data) {
+            	if (data) {
+                	console.log("post question successfully");
+                	window.location.reload();              	
+            	}
+        	});
+	});
+	$("ul > *").on("click", function (e) {	   
+		var answer = e.target;
+		e.preventDefault()
+		var $answer = $(answer);
+		if ($answer.parent().hasClass("vote-up-off")) {
+			var answerValue = $answer.parent().parent().children("input").val();
+			$.post("/answer/addVote", { questionId: $("#questionId").val(), answerId: answerValue }, function (data) {
+            	if (data) {
+                	console.log("post question successfully");
+                	window.location.reload();   	
+            	}
+        	});
+		} else if ($answer.parent().hasClass("vote-down-off")) {
+			var answerValue = $answer.parent().parent().children("input").val();
+			$.post("/answer/removeVote", { questionId: $("#questionId").val(), answerId: answerValue }, function (data) {
+            	if (data) {
+                	console.log("post question successfully");
+                	window.location.reload();              	
+            	}
+        	});
+		}		
+	}); 
+   
+   /* $("#answerRemoveVote").on("click", function () {
+        var answerValue = $(this).parent().children("#answerId").val();	
+		$.post("/answer/removeVote", { questionId: $("#questionId").val(), answerId: answerValue }, function (data) {
+            	if (data) {
+                	console.log("post question successfully");
+                	window.location.reload();              	
+            	}
+        	});
+	});*/
+</script>
+<%- include footer %>
