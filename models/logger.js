@@ -1,8 +1,15 @@
+/*******************************************************************************
+ * Licensed Materials - Property of IBM (c) Copyright IBM Corporation 2014. All
+ * Rights Reserved.
+ * 
+ * Note to U.S. Government Users Restricted Rights: Use, duplication or
+ * disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+ ******************************************************************************/
 /**
  * The logger for the application to log something.
  */
 
-var logger = new Object();
+var logger = {};
 logger.debugLevel = 'warn';
 logger.ERROR = 'error';
 logger.DEBUG = 'warn';

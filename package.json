@@ -6,16 +6,26 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.3.1",
-    "ejs": "*",
-    "mongodb": "*",
-    "connect-mongo": "*",
-    "connect-flash": "*",
-    "request": "*",
+    "body-parser": "^1.9.0",
     "cheerio": "*",
-    "socket.io": "*",
+    "connect-flash": "*",
+    "errorhandler": "^1.2.2",
+    "express": "^4.9.7",
+    "express-session": "^1.8.2",
+    "serve-static": "*",
+    "cookie-parser": "*",
     "gm": "*",
+    "jade": "^1.7.0",
+    "method-override": "^2.3.0",
+    "mongodb": "*",
+    "mongoose": "*",
+    "mongoose-auto-increment": "*",
+    "morgan": "^1.4.0",
+    "multer": "^0.1.6",
     "node-images": "*",
+    "request": "*",
+    "serve-favicon": "^2.1.6",
+    "socket.io": "*",
     "xmlreader": "*"
   }
 }
